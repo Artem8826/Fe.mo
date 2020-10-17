@@ -1170,12 +1170,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Text: {fileID: 0}
-  WetLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  DryLayerMask:
+  InteractLayerMask:
     serializedVersion: 2
     m_Bits: 1024
+  InteractionEffectProp: 2
 --- !u!1 &1402825719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,12 +1301,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Text: {fileID: 0}
-  WetLayer:
+  InteractLayerMask:
     serializedVersion: 2
-    m_Bits: 512
-  DryLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
+  InteractionEffectProp: 1
 --- !u!1001 &1420359446
 PrefabInstance:
   m_ObjectHideFlags: 0

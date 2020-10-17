@@ -14,7 +14,7 @@ TagManager:
   - 
   - 
   - IHoldElement
-  - IWetableElement
+  - 
   - IDryMakableElement
   - 
   - 

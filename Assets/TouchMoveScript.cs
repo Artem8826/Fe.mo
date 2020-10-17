@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Assets;
 using UnityEngine;
@@ -8,8 +9,8 @@ using UnityEngine.UI;
 public class TouchMoveScript : MonoBehaviour
 {
     public Text Text;
-    public LayerMask WetLayer;
-    public LayerMask DryLayerMask;
+    public LayerMask InteractLayerMask;
+    public InteractionEffect InteractionEffectProp;
 
     private float deltaX;
     private float deltaY;
@@ -89,7 +90,6 @@ public class TouchMoveScript : MonoBehaviour
 
             IfUponHoldCell();
             IfUponIPutable();
-            IfDry();
 
             Debug.Log("Ended phase locked");
         }
@@ -116,41 +116,54 @@ public class TouchMoveScript : MonoBehaviour
     {
         Vector3 pointer = Input.touchCount > 0 ? new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, 0) : Input.mousePosition;
 
-        if (WetLayer.value > 0)
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(pointer), out RaycastHit hit, 25, LayerMask.GetMask("IDryMakableElement")))
+//        if (InteractionEffectProp == InteractionEffect.Wet)
+//            if (Physics.Raycast(Camera.main.ScreenPointToRay(pointer), out RaycastHit hit, 25, LayerMask.GetMask("IDryMakableElement")))
+//            if (Physics.Raycast(Camera.main.ScreenPointToRay(pointer), out RaycastHit hit, 25, (1 << 10)))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(pointer), out RaycastHit hit, 25, InteractLayerMask))
             {
-                if (hit.collider.TryGetComponent(out IPutable putable))
-                {
-                    putable.OnWet();
+                FunctionEffect.Call(hit.collider, InteractionEffectProp);
+//                if (hit.collider.TryGetComponent(out IPutable putable))
+//                {
+//                    if (InteractionEffectProp == InteractionEffect.Wet)
+//                    {
+//                        putable.OnWet();
+//                    } 
+//                    else if (InteractionEffectProp == InteractionEffect.Dry)
+//                    {
+//                        putable.OnDry();
+//                    }
+//
+//                }
 
-                    Debug.Log("I upon OnWet object " + LayerMask.LayerToName(hit.collider.gameObject.layer));
-
-                    transform.position = hit.collider.transform.position;
-                }
+            //                    Debug.Log("I upon OnWet object " + LayerMask.LayerToName(hit.collider.gameObject.layer));
+            transform.position = hit.collider.transform.position;
             }
     }
 
-    private void IfDry()
-    {
-        Vector3 pointer = Input.touchCount > 0 ? new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, 0) : Input.mousePosition;
-
-        Debug.Log(DryLayerMask.value);
-        if (DryLayerMask.value > 0)
-        {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(pointer), out RaycastHit hit, 25, LayerMask.GetMask("IDryMakableElement")))
-            {
-                if (hit.collider.TryGetComponent(out IPutable putable))
-                {
-                    putable.OnDry();
-
-                    Debug.Log("I upon OnDry object " + LayerMask.LayerToName(hit.collider.gameObject.layer));
-
-                    transform.position = hit.collider.transform.position;
-                }
-            }
-        }
-            
-    }
+//    private void IfDry()
+//    {
+//        Vector3 pointer = Input.touchCount > 0 ? new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, 0) : Input.mousePosition;
+//
+//        Debug.Log(Convert.ToString(InteractLayerMask.value, 2).PadLeft(32, '0'));
+//
+//        if (InteractionEffectProp == InteractionEffect.Dry)
+//        {
+////            if (Physics.Raycast(Camera.main.ScreenPointToRay(pointer), out RaycastHit hit, 25, LayerMask.GetMask("IDryMakableElement")))
+////            if (Physics.Raycast(Camera.main.ScreenPointToRay(pointer), out RaycastHit hit, 25, (1 << 10)))
+//                if (Physics.Raycast(Camera.main.ScreenPointToRay(pointer), out RaycastHit hit, 25, InteractLayerMask))
+//                {
+//                if (hit.collider.TryGetComponent(out IPutable putable))
+//                {
+//                    putable.OnDry();
+//
+//                    Debug.Log("I upon OnDry object " + LayerMask.LayerToName(hit.collider.gameObject.layer));
+//
+//                    transform.position = hit.collider.transform.position;
+//                }
+//            }
+//        }
+//            
+//    }
 
     private void GravitationStop()
     {
@@ -164,3 +177,4 @@ public class TouchMoveScript : MonoBehaviour
 
     }
 }
+
