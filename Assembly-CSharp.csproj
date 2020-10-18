@@ -56,8 +56,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\PlantContainer.cs" />
-    <Compile Include="Assets\HoldCell.cs" />
+    <Compile Include="Assets\HoldCell\HoldCell.cs" />
     <Compile Include="Assets\TouchMoveScript.cs" />
+    <Compile Include="Assets\IPutable.cs" />
+    <Compile Include="Assets\SoilMaker.cs" />
+    <Compile Include="Assets\InteractionEffect.cs" />
+    <Compile Include="Assets\FunctionEffect.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
